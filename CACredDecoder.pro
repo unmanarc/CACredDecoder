@@ -3,11 +3,12 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += main.cpp \
-    main.cpp
+SOURCES += src/main.cpp
 HEADERS +=
 
 DISTFILES += \
     README.md
 
 
+QMAKE_INCDIR += src
+INCLUDEPATH += src
