@@ -10,6 +10,24 @@
 using namespace std;
 
 
+/*
+ * Obtained from https://docs.cyberark.com/Product-Doc/OnlineHelp/PAS/Latest/en/Content/PASIMP/CreateCredFile-Utility.htm
+        Central Policy Manager	CPM
+        Password Vault Web Access	PVWA
+        Password Vault Web Access application user	PVWAApp
+        OPM and Credential Provider	AppPrv
+        Privileged Session Manager application user	PSMApp
+        CyberArk Replicator/Restore/Prebackup	CABACKUP
+        Disaster Recovery Vault	DR
+        Event Notification Engine	ENE
+        PrivateArk Client	WINCLIENT, GUI
+        CyberArk CLI	PACLI
+        CyberArk ActiveX API	XAPI
+        CyberArk .Net API	NAPI
+        Export Vault Data	EVD
+        CyberArk Encryption Utility	CACrypt
+*/
+
 void decodeAESKey(sCrackingOptions *crackingOptions)
 {
 
@@ -21,8 +39,8 @@ void decodeAESKey(sCrackingOptions *crackingOptions)
             clientApps.push_back(crackingOptions->sClientApp);
         else
         {
-            fprintf(stderr,"ERROR: value not provided \"ClientApp\" field... may fail\n");
-            clientApps.push_back("");
+            fprintf(stderr,"WARNING: value not provided \"ClientApp\" field, cracking it\n");
+            clientApps = {"CABACKUP", "DR", "ENE", "GUI", "WINCLIENT", "WINCLIENT, GUI", "PACLI", "XAPI", "NAPI", "EVD", "CACrypt","CPM","PVWA","PVWAApp", "AppPrv", "PSMApp",  ""};
         }
     }
     else

@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     boost::property_tree::ptree pt;
 
     // Program Intro:
-    fprintf(stderr, "PEC Decryptor for Credential File 2.0 - v0.3a\n");
+    fprintf(stderr, "PEC Decryptor for Credential File 2.0 - v1.0a\n");
     fprintf(stderr, "Written by Aaron Mizrachi <aaron@unmanarc.com> under GPL License (C) 2019\n\n");
 //    fprintf(stderr, "All your creds are belong to us ;-)\n\n");
 
@@ -124,6 +124,7 @@ int main(int argc, char *argv[])
         fprintf(stderr, "------------------------------------------------------------\n");
     }
 
+    // Decode and show the new password in plain text using the derived key:
     if (!sNewPassword.empty())
     {
         fprintf(stderr, "------------------------------------------------------------\n");
@@ -146,6 +147,7 @@ int main(int argc, char *argv[])
         fprintf(stderr, "------------------------------------------------------------\n");
     }
 
+    // Ellapsed time:
     auto end = chrono::steady_clock::now();
     typedef std::chrono::duration<float> fsec;
     fsec fs = end - start;
