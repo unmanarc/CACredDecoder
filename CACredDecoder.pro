@@ -14,6 +14,10 @@ HEADERS += \
     src/cracking_options.h
 
 DISTFILES += \
+    PoC1.cred \
+    PoC2.cred \
+    PoC3.cred \
+    PoC4.cred \
     README.md
 
 QMAKE_INCDIR += src
