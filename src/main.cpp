@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <chrono>
 
 #include "aeskey_decoder.h"
 #include "aesblock_decryptor.h"
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
     boost::property_tree::ptree pt;
 
     // Program Intro:
-    fprintf(stderr, "PEC Decryptor for Credential File 2.0 - v0.2a\n");
+    fprintf(stderr, "PEC Decryptor for Credential File 2.0 - v0.3a\n");
     fprintf(stderr, "Written by Aaron Mizrachi <aaron@unmanarc.com> under GPL License (C) 2019\n\n");
 //    fprintf(stderr, "All your creds are belong to us ;-)\n\n");
 
@@ -36,6 +37,8 @@ int main(int argc, char *argv[])
     fprintf(stderr, "To be clear: according to the software provider this is not a vulnerability\n");
     fprintf(stderr, "CreateCredFile.exe can be used with other storage/authentication options\n");
     fprintf(stderr, "Please avoid to use password file based credential in production.\n\n");
+
+    auto start = chrono::steady_clock::now();
 
     // Usage:
     if (argc!=2)
@@ -143,6 +146,12 @@ int main(int argc, char *argv[])
         fprintf(stderr, "------------------------------------------------------------\n");
     }
 
+    auto end = chrono::steady_clock::now();
+    typedef std::chrono::duration<float> fsec;
+    fsec fs = end - start;
+    cerr << "Elapsed cracking time: "
+        << fs.count()*1000
+        << " ms" << endl;
 
 
     return 0;

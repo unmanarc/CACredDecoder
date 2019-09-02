@@ -1,7 +1,7 @@
 # C-Ark Credential Decoder
 A Tool for decoding C-ARK Credential files  
 By Aaron Mizrachi <aaron@unmanarc.com>
-v0.1 - Aug/2019 
+v0.3a - Sep/2019 
 
 ## NOTE / POTENTIAL USAGE:
 Acording to the vendor, this is not a vulnerability, this is a problem derivated by the misuse of the tools.
