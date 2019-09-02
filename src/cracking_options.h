@@ -81,17 +81,20 @@ struct sCrackingOptions
     }
 
 
-    std::string composeKeyPayload(const std::string & _sClientApp)
+    std::string composeKeyPayload(const std::string & _sClientAppType)
     {
         std::string keyPayload;
 
-        if (!_sClientApp.empty()) keyPayload+=getSHA1Base64Digest(boost::to_lower_copy(_sClientApp));
-        if (usingAppPath) keyPayload+=sAppPath;
-        if (usingClientIP) keyPayload+=sClientIP;
-        if (usingOSUser) keyPayload+=sOSUser;
-        if (usingClientHostname) keyPayload+=sClientHostname;
+
+        if (!_sClientAppType.empty()) keyPayload+=getSHA1Base64Digest(boost::to_lower_copy(_sClientAppType)); //
+
+        if (usingAppPath) keyPayload+=boost::to_lower_copy(sAppPath); //
+        if (usingClientIP) keyPayload+=sClientIP; //
+        if (usingClientHostname) keyPayload+=boost::to_lower_copy(sClientHostname); //
+        if (usingOSUser) keyPayload+=boost::to_lower_copy(sOSUser); //
 
         keyPayload+=sAdditionalInformation;
+
 
         return keyPayload;
     }
