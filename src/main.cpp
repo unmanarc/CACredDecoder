@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     boost::property_tree::ptree pt;
 
     // Program Intro:
-    fprintf(stderr, "PEC Decryptor for Credential File 2.0 - v0.1a\n");
+    fprintf(stderr, "PEC Decryptor for Credential File 2.0 - v0.2a\n");
     fprintf(stderr, "Written by Aaron Mizrachi <aaron@unmanarc.com> under GPL License (C) 2019\n\n");
 //    fprintf(stderr, "All your creds are belong to us ;-)\n\n");
 
@@ -68,6 +68,7 @@ int main(int argc, char *argv[])
     int iCredFileVersion = pt.get<int>("CredFileVersion",0);
     string sUsername = pt.get<std::string>("Username","");
     string sPassword = pt.get<std::string>("Password","");
+    string sNewPassword = pt.get<std::string>("NewPassword","");
     string sExternalAuthentication = pt.get<std::string>("ExternalAuthentication","no");
 
     // Validate credential version =2 (we don't know how the version 1 works)
@@ -119,6 +120,29 @@ int main(int argc, char *argv[])
         passwordDecryptor.print();
         fprintf(stderr, "------------------------------------------------------------\n");
     }
+
+    if (!sNewPassword.empty())
+    {
+        fprintf(stderr, "------------------------------------------------------------\n");
+        fprintf(stderr, "Decoding PrivateArk new password for user <<%s>>...\n", sUsername.c_str());
+        AESBlock_Decryptor passwordDecryptor;
+        passwordDecryptor.setId("AES_256_CBC");
+        if (!passwordDecryptor.init(sNewPassword.c_str(),sNewPassword.size()))
+        {
+            fprintf(stderr, "Damaged new \"Password\" field. Aborting.\n");
+            return ERR_BADHEX;
+        }
+        if (!passwordDecryptor.decode(EVP_aes_256_cbc(),&crackingOptions))
+        {
+            fprintf(stderr, "Decoding new password failed.\n");
+        }
+        else
+        {
+            passwordDecryptor.print();
+        }
+        fprintf(stderr, "------------------------------------------------------------\n");
+    }
+
 
 
     return 0;
