@@ -1,18 +1,17 @@
 # C-Ark Credential Decoder
 A Tool for decoding C-ARK Credential files  
 By Aaron Mizrachi <aaron@unmanarc.com>
-v0.3a - Sep/2019 
+v1.0a - Sep/2019 
 
 ## NOTE / POTENTIAL USAGE:
-Acording to the vendor, this is not a vulnerability, this is a problem derivated by the misuse of the tools.
+
+**Acording to the vendor, this is not a vulnerability, this is a problem derivated from the misuse of the tool.**
 
 During a pentest, if someone is smart enough to reach the PSM and accidentally get access to the CredFile, someone can potentially use this file to establish a connection to the Vault and get the whole reign...
 
-However, the credfile have some "restrictions" to avoid this file to be used in other environments (the hacker very own PSM). 
+To have a countermeasure, most Credentials Files place some "restrictions" to avoid the password to be used in a different environment/computer (Eg. the hacker very own PSM). 
 
-Sometimes, this restrictions are based on some self-included encryption key (when used without an HSM)... And when you reverse the raw key portion, it will show the first introduced key and/or the "random" generated plain key that it's changed everytime.
-
-This the decrypted key portion can be used to re-create another file with another "security" parameters.
+However, those restrictions can be modified *if you reverse and get the raw key portion*. This  decrypted key portion can be used to re-create another file with another "security" parameters (Eg. another host, another application, another OS User).
 
 ## Operation Mode
 
@@ -36,16 +35,7 @@ We are using (verificationflags-16) for figuring which validation/restriction is
 and in the case that some restrictions are not displayed in the output credential file, you can always introduce them by hand. I think that we can both agree in that neither "app path" nor "client IP” is a truly random value.
 
 
-## Items of concern we’d like to share:
-
-- There is a OpenSSL function to derive text to AES-256 Key which is cryptographically strong, and some other better alternatives. We believe no one would actually recommend using a couple of SHA-1 to generate the key from a source with a low entropy model (this is not cryptographically strong).
-- ClientIP/OSUser/AppPath/ClientHostname is taken only from the current computer running “createcredfile.exe", so it isn’t possible to produce the credential file outside the PSM/PVWA.
-- Typing plaintext passwords manually into the PSM is not the best security practice, and if you want to use restrictions you are forced to, so the previous restriction will expose some keys to another attack vectors.
-- The ClientIP is taken from only one interface, in some cases it will take dummy interfaces (ip: 169.254.x.x), reducing the entropy.
-
 
 ## Mitigation:
 
-Use the HSM \o/
-
-
+Use the HSM \o/, don't store the decryption key in the cred file.
